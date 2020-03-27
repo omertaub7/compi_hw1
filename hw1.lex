@@ -46,7 +46,7 @@ return							showToken("RETURN");
 /* TODO: BINOP*/					showToken("BINOP");
 true							showToken("TRUE");
 false							showToken("FALSE");
-
+/* TODO: Arrow and colon and comments */
 
 .							illegalChar();
 %%
