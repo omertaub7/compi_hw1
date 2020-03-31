@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include <stdbool.h>
 // defenitions to use the digits
 typedef enum _BASE_TYPE {BASE_BIN = 0, BASE_OCT, BASE_DEC, BASE_HEX} BASE_TYPE;
 const int BASE_VALUE[] = {2, 8, 10, 16};
@@ -17,7 +17,7 @@ const char* const BASE_NAME[] = {"BIN", "OCT", "DEC", "HEX"};
 void showToken (char* name);
 // deal with an integer in one of the methods
 void showInt (BASE_TYPE);
-
+bool printable (int val);
 void illegalChar (); //TODO: Check how to pass only the char and not all the string
 
 //---------------------COMMENT handeling code---------------------------------
@@ -100,6 +100,7 @@ COMMENT2_START			(\/\/)
 
 {COMMENT2_START}					BEGIN(COMMENT2);
 <COMMENT2>{NEWLINE}					comment2_end();
+<COMMENT2><<EOF>>                                     comment2_end();
 <COMMENT2>{PRINTABLE_NO_NEWLINE}	;
 
 Int|UInt|Double|Float|Bool|String|Character		showToken("TYPE");
@@ -124,7 +125,7 @@ false							showToken("FALSE");
 \[								showToken("LBRACKET");
 \]								showToken("RBRACKET");
 =								showToken("ASSIGN");
-(==|!=|<|<=|>=)					showToken("REALOP");
+(==|!=|<|<=|>=)					showToken("RELOP");
 ((\|\|)|(\&\&))					showToken("LOGOP");
 (\+|-|\*|\/|\%)					showToken("BINOP");
 (->)							showToken("ARROW");
@@ -140,7 +141,7 @@ false							showToken("FALSE");
 
 0x({HEX_DIGIT}+)[pP][+-]({DEC_DIGIT}+)   	    showToken("HEX_FP");
 
-({LETTER}+)(({LETTER}|{DEC_DIGIT})+)			showToken("ID");
+({LETTER}+)(({LETTER}|{DEC_DIGIT})*)			showToken("ID");
 _(({LETTER}|{DEC_DIGIT})+)						showToken("ID");
 
 
@@ -224,7 +225,8 @@ void string_end () {
 void string_input() {
 	char * ptr = yytext;
 	while (*ptr) {
-		*string_buf_ptr = *ptr++;
+		*string_buf_ptr = *ptr;
+		string_buf_ptr++; ptr++;
 	}
 }
 
@@ -240,6 +242,10 @@ void string_concat(char c) {
 	*string_buf_ptr++ = c;
 }
 
+bool printable (int val) {
+	return (val == 0x9 || val == 0xA || val == 0xD || (val >= 0x20 && val <= 0x7E));
+}
+
 void string_num_to_ascii () {
 	char* ascii_ptr = yytext;
 	while (*ascii_ptr != '{') {
@@ -252,7 +258,7 @@ void string_num_to_ascii () {
 	}
 	*ascii_ptr = '\0';
 	int val = (int) strtol(start_ptr, NULL, 16);
-	if (val >= MAX_ASCII) {
+	if (!printable(val)) {
 		string_error_escape_sequence();
 	}
 	 if (string_index >= STRING_LEN) {
