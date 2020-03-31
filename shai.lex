@@ -23,7 +23,7 @@ void comment2_end();
 %option yylineno
 %option noyywrap
 
-DIGIT 					([0-9])
+DEC_DIGIT 				([0-9])
 LETTER					([a-zA-Z])
 WHITESPACE				([\t\n\r ])
 NEWLINE					(([\r\n])|(\r\n))

@@ -39,7 +39,6 @@ PRINTABLE_NO_NEWLINE	([\x20-\x7E\t])
 
 %%
 
-<<<<<<< HEAD
 \" 								string_init();
 <STRING>\"						string_end();
 <STRING>\n						string_error_endline();
@@ -47,22 +46,10 @@ PRINTABLE_NO_NEWLINE	([\x20-\x7E\t])
 <STRING>\\r						string_concat('\r');
 <STRING>\\t						string_concat('\t');
 <STRING>\\						string_concat('\\');
-<STRING>\\"						string_concat('\"');
-<STRING>\\u{[0-9a-fA-F]+}       string_num_to_ascii();
-<STRING>\\.                     string_error_escape_sequence();
-=======
-\" 					string_init();
-<STRING>\"				string_end();
-<STRING>\n				string_error_endline();
-<STRING>\\n				string_concat('\n');
-<STRING>\\r				string_concat('\r');
-<STRING>\\t				string_concat('\t');
-<STRING>\\				string_concat('\\');
-<STRING>\\\"				string_concat('\"');
+<STRING>\\\"					string_concat('\"');
 <STRING>\\u\{[0-9a-fA-F]+\}		string_num_to_ascii();
-<STRING>\\.                             string_error_escape_sequence();
->>>>>>> 9197b4ff17f56f9b870a00354be8e96b10475296
-<STRING>[^\\\n\"\r\t]+			string_input(); //TODO - add \u escape to the regex excludes
+<STRING>\\.                     string_error_escape_sequence();
+<STRING>({PRINTABLE_NO_NEWLINE}+)			string_input(); 
 %%
 //---------------------------------STRING  FUNCTIONS-----------------------"
 void string_init () {
@@ -92,11 +79,7 @@ void string_error_endline() {
 void string_concat(char c) {
 	string_index++;
 	if (string_index >= STRING_LEN) {
-<<<<<<< HEAD
-		do_error("Error string too long\n"); //Probably not needed, left for safety
-=======
 		do_error("Error string too long"); //Probably not needed, left for safety
->>>>>>> 9197b4ff17f56f9b870a00354be8e96b10475296
 	}
 	*string_buf_ptr++ = c;
 }
