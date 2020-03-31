@@ -389,9 +389,9 @@ static yyconst flex_int16_t yy_accept[161] =
     {   0,
         0,    0,    0,    0,    0,    0,    0,    0,   58,   56,
        55,   55,   56,    1,   43,   56,   34,   35,   33,   43,
-       56,   43,   48,   48,   45,   32,   41,   40,   56,   56,
-       56,   56,   56,   56,   56,   56,   56,   38,   39,   56,
-       56,   56,   56,   56,   56,   56,   56,   56,   56,   36,
+       56,   43,   48,   48,   45,   32,   41,   40,   56,   53,
+       53,   53,   53,   53,   53,   53,   53,   38,   39,   56,
+       53,   53,   53,   53,   53,   53,   53,   53,   53,   36,
        56,   37,   16,   15,   15,   16,   16,   19,   18,   18,
        11,    3,    2,    7,   41,   42,   44,   50,   12,   17,
        50,   48,    0,    0,    0,   53,   53,   53,   53,   53,
@@ -694,7 +694,7 @@ char *yytext;
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include <stdbool.h>
 // defenitions to use the digits
 typedef enum _BASE_TYPE {BASE_BIN = 0, BASE_OCT, BASE_DEC, BASE_HEX} BASE_TYPE;
 const int BASE_VALUE[] = {2, 8, 10, 16};
@@ -704,7 +704,7 @@ const char* const BASE_NAME[] = {"BIN", "OCT", "DEC", "HEX"};
 void showToken (char* name);
 // deal with an integer in one of the methods
 void showInt (BASE_TYPE);
-
+bool printable (int val);
 void illegalChar (); //TODO: Check how to pass only the char and not all the string
 
 //---------------------COMMENT handeling code---------------------------------
@@ -1118,205 +1118,208 @@ YY_RULE_SETUP
 #line 102 "hw1.lex"
 comment2_end();
 	YY_BREAK
+case YY_STATE_EOF(COMMENT2):
+#line 103 "hw1.lex"
+comment2_end();
+	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 103 "hw1.lex"
+#line 104 "hw1.lex"
 ;
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 105 "hw1.lex"
+#line 106 "hw1.lex"
 showToken("TYPE");
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 106 "hw1.lex"
+#line 107 "hw1.lex"
 showToken("VAR");
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 107 "hw1.lex"
+#line 108 "hw1.lex"
 showToken("LET");
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 108 "hw1.lex"
+#line 109 "hw1.lex"
 showToken("FUNC");
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 109 "hw1.lex"
+#line 110 "hw1.lex"
 showToken("IMPORT");
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 110 "hw1.lex"
+#line 111 "hw1.lex"
 showToken("NIL");
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 111 "hw1.lex"
+#line 112 "hw1.lex"
 showToken("WHILE");
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 112 "hw1.lex"
+#line 113 "hw1.lex"
 showToken("IF");
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 113 "hw1.lex"
+#line 114 "hw1.lex"
 showToken("ELSE");
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 114 "hw1.lex"
+#line 115 "hw1.lex"
 showToken("RETURN");
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 115 "hw1.lex"
+#line 116 "hw1.lex"
 showToken("TRUE");
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 116 "hw1.lex"
+#line 117 "hw1.lex"
 showToken("FALSE");
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 118 "hw1.lex"
+#line 119 "hw1.lex"
 showToken("SC");
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 119 "hw1.lex"
+#line 120 "hw1.lex"
 showToken("COMMA");
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 120 "hw1.lex"
+#line 121 "hw1.lex"
 showToken("LPAREN");
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 121 "hw1.lex"
+#line 122 "hw1.lex"
 showToken("RPAREN");
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 122 "hw1.lex"
+#line 123 "hw1.lex"
 showToken("LBRACE");
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 123 "hw1.lex"
+#line 124 "hw1.lex"
 showToken("RBRACE");
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 124 "hw1.lex"
+#line 125 "hw1.lex"
 showToken("LBRACKET");
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 125 "hw1.lex"
+#line 126 "hw1.lex"
 showToken("RBRACKET");
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 126 "hw1.lex"
+#line 127 "hw1.lex"
 showToken("ASSIGN");
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 127 "hw1.lex"
-showToken("REALOP");
+#line 128 "hw1.lex"
+showToken("RELOP");
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 128 "hw1.lex"
+#line 129 "hw1.lex"
 showToken("LOGOP");
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 129 "hw1.lex"
+#line 130 "hw1.lex"
 showToken("BINOP");
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 130 "hw1.lex"
+#line 131 "hw1.lex"
 showToken("ARROW");
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 131 "hw1.lex"
+#line 132 "hw1.lex"
 showToken("COLON");
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 133 "hw1.lex"
+#line 134 "hw1.lex"
 showInt(BASE_BIN);
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 134 "hw1.lex"
+#line 135 "hw1.lex"
 showInt(BASE_OCT);
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 135 "hw1.lex"
+#line 136 "hw1.lex"
 showInt(BASE_DEC);
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 136 "hw1.lex"
+#line 137 "hw1.lex"
 showInt(BASE_HEX);
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 138 "hw1.lex"
+#line 139 "hw1.lex"
 showToken("DEC_REAL");
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 139 "hw1.lex"
+#line 140 "hw1.lex"
 showToken("DEC_REAL");
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 141 "hw1.lex"
+#line 142 "hw1.lex"
 showToken("HEX_FP");
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 143 "hw1.lex"
+#line 144 "hw1.lex"
 showToken("ID");
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 144 "hw1.lex"
+#line 145 "hw1.lex"
 showToken("ID");
 	YY_BREAK
 case 55:
 /* rule 55 can match eol */
 YY_RULE_SETUP
-#line 147 "hw1.lex"
+#line 148 "hw1.lex"
 ;
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 149 "hw1.lex"
+#line 150 "hw1.lex"
 illegalChar();
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 150 "hw1.lex"
+#line 151 "hw1.lex"
 ECHO;
 	YY_BREAK
-#line 1318 "lex.yy.c"
+#line 1322 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
-case YY_STATE_EOF(COMMENT2):
 case YY_STATE_EOF(STRING):
 	yyterminate();
 
@@ -2322,7 +2325,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 150 "hw1.lex"
+#line 151 "hw1.lex"
 
 
 
@@ -2343,7 +2346,7 @@ void showInt(BASE_TYPE base_type)
 
 void illegalChar() 
 {
-    printf("Error %s \n", yytext);
+    printf("Error %s\n", yytext);
     exit(0);
 }
 
@@ -2401,7 +2404,8 @@ void string_end () {
 void string_input() {
 	char * ptr = yytext;
 	while (*ptr) {
-		*string_buf_ptr = *ptr++;
+		*string_buf_ptr = *ptr;
+		string_buf_ptr++; ptr++;
 	}
 }
 
@@ -2417,6 +2421,10 @@ void string_concat(char c) {
 	*string_buf_ptr++ = c;
 }
 
+bool printable (int val) {
+	return (val == 0x9 || val == 0xA || val == 0xD || (val >= 0x20 && val <= 0x7E));
+}
+
 void string_num_to_ascii () {
 	char* ascii_ptr = yytext;
 	while (*ascii_ptr != '{') {
@@ -2429,7 +2437,7 @@ void string_num_to_ascii () {
 	}
 	*ascii_ptr = '\0';
 	int val = (int) strtol(start_ptr, NULL, 16);
-	if (val >= MAX_ASCII) {
+	if (!printable(val)) {
 		string_error_escape_sequence();
 	}
 	 if (string_index >= STRING_LEN) {
@@ -2441,3 +2449,4 @@ void string_num_to_ascii () {
 void string_error_escape_sequence() {
 	do_error("Error undefined escape sequence");
 }
+

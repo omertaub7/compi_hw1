@@ -167,7 +167,7 @@ void showInt(BASE_TYPE base_type)
 
 void illegalChar() 
 {
-    printf("Error %s \n", yytext);
+    printf("Error %s\n", yytext);
     exit(0);
 }
 
