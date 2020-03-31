@@ -12,6 +12,7 @@ void print_token(const char* token, const char* value);
 char string_buffer[STRING_LEN];
 char *string_buf_ptr;
 int string_index;
+
 void string_init ();
 
 %}
@@ -33,19 +34,19 @@ PRINTABLE_NO_NEWLINE	([\x20-\x7E\t])
 
 %%
 
-\" 					string_init();
-<STRING>\"				string_end();
-<STRING>\n				string_error_endline();
-<STRING>\\n				string_concat('\n');
-<STRING>\\r				string_concat('\r');
-<STRING>\\t				string_concat('\t');
-<STRING>\\				string_concat('\\');
-<STRING>\\"				string_concat('\"');
-<STRING>\\u{[0-9a-fA-F]+}               string_num_to_ascii();
-<STRING>\\.                             string_error_escape_sequence();
+\" 								string_init();
+<STRING>\"						string_end();
+<STRING>\n						string_error_endline();
+<STRING>\\n						string_concat('\n');
+<STRING>\\r						string_concat('\r');
+<STRING>\\t						string_concat('\t');
+<STRING>\\						string_concat('\\');
+<STRING>\\"						string_concat('\"');
+<STRING>\\u{[0-9a-fA-F]+}       string_num_to_ascii();
+<STRING>\\.                     string_error_escape_sequence();
 <STRING>[^\\\n\"\r\t]+			string_input(); //TODO - add \u escape to the regex excludes
 %%
-//---------------------------------STRING  FUNCTIONS-----------------------
+//---------------------------------STRING  FUNCTIONS-----------------------"
 void string_init () {
 	BEGIN(STRING);
 	string_index = 0;
@@ -73,7 +74,7 @@ void string_error_endline() {
 void string_concat(char c) {
 	string_index++;
 	if (string_index >= STRING_LEN) {
-		do_error("Error string too long", NULL); //Probably not needed, left for safety
+		do_error("Error string too long\n"); //Probably not needed, left for safety
 	}
 	*string_buf_ptr++ = c;
 }
