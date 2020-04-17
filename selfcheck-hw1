@@ -2,7 +2,7 @@
 
 # change these per each homework
 #	link to tests:
-testsurl="https://webcourse.cs.technion.ac.il/fc159753hw_236360_201902/hw/WCFiles/hw1-tests.zip"
+testsurl="https://grades.cs.technion.ac.il/grades.cgi?dbccehbcf369bff685fd256e74ec1f+2+236360+Spring2020+hw/WCFiles/hw1-tests.zip"
 #	number of tests:
 numtests=2
 #	command to execute test:

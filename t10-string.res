@@ -6,4 +6,9 @@ SPOKEN."
 3 STRING 
 4 STRING 
 
-Error undefined escape sequence
+5 STRING 
+for item in items:
+	item.destroy()
+	\\BYE BYE
+6 STRING cOoL
+7 STRING This string is exactly 1024 charecters long, I can promise you. The script count it by itself! This string is exactly 1024 charecters long, I can promise you. The script count it by itself! This string is exactly 1024 charecters long, I can promise you. The script count it by itself! This string is exactly 1024 charecters long, I can promise you. The script count it by itself! This string is exactly 1024 charecters long, I can promise you. The script count it by itself! This string is exactly 1024 charecters long, I can promise you. The script count it by itself! This string is exactly 1024 charecters long, I can promise you. The script count it by itself! This string is exactly 1024 charecters long, I can promise you. The script count it by itself! This string is exactly 1024 charecters long, I can promise you. The script count it by itself! This string is exactly 1024 charecters long, I can promise you. The script count it by itself! This string is exactly 1024 charecters long, I can promise you. bye bye!!!
